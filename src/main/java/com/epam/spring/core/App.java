@@ -1,17 +1,23 @@
 package com.epam.spring.core;
 
+import com.epam.spring.core.beans.Client;
+import com.epam.spring.core.loggers.EventLogger;
+
 public class App {
 
     private Client client;
-    private ConsoleEventLogger eventLogger;
+    private EventLogger eventLogger;
+
+    public App() {
+    }
+
+    public App(Client client) {
+        this.client = client;
+    }
 
     public static void main(String[] args) {
         App app = new App();
-        app.client = new Client("1", "John Smith");
-       app.eventLogger = new ConsoleEventLogger();
-
         app.logEvent("some event for user 1");
-
     }
 
     private void logEvent(String msg) {
@@ -19,5 +25,19 @@ public class App {
         eventLogger.logEvent(message);
     }
 
+    public Client getClient() {
+        return client;
+    }
 
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public EventLogger getEventLogger() {
+        return eventLogger;
+    }
+
+    public void setEventLogger(EventLogger eventLogger) {
+        this.eventLogger = eventLogger;
+    }
 }

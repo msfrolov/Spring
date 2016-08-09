@@ -1,8 +1,13 @@
-package com.epam.spring.core;
+package com.epam.spring.core.beans;
 
 public class Client {
     private String id;
     private String fullName;
+
+    public Client() {
+        this.id = "1";
+        this.fullName = "John Smith";
+    }
 
     public Client(String id, String fullName) {
         this.id = id;
