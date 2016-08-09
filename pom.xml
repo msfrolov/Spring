@@ -13,8 +13,10 @@
     <description>"Spring Core" course by Yuriy Tkach @epam</description>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.ver>1.8</java.ver>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--<spring.version>4.3.2.RELEASE</spring.version>-->
+        <spring.ver>3.2.13.RELEASE</spring.ver>
     </properties>
 
     <build>
@@ -25,13 +27,36 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.5.1</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <source>${java.ver}</source>
+                    <target>${java.ver}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
 
         </plugins>
     </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.ver}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.ver}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring.ver}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.ver}</version>
+        </dependency>
+    </dependencies>
 
 </project>
