@@ -2,8 +2,13 @@ package com.epam.spring.core;
 
 import com.epam.spring.core.beans.Client;
 import com.epam.spring.core.loggers.EventLogger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class App {
+
+    //    private Client client = context.getBean("client", Client.class);
+    //    private EventLogger eventLogger = context.getBean("eventLogger", EventLogger.class);
 
     private Client client;
     private EventLogger eventLogger;
@@ -11,12 +16,14 @@ public class App {
     public App() {
     }
 
-    public App(Client client) {
+    public App(Client client, EventLogger eventLogger) {
         this.client = client;
+        this.eventLogger = eventLogger;
     }
 
     public static void main(String[] args) {
-        App app = new App();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring-root.xml");
+        App app = context.getBean("app", App.class);
         app.logEvent("some event for user 1");
     }
 
