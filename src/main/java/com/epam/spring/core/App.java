@@ -3,7 +3,7 @@ package com.epam.spring.core;
 import com.epam.spring.core.beans.Client;
 import com.epam.spring.core.beans.Event;
 import com.epam.spring.core.loggers.EventLogger;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class App {
@@ -23,15 +23,15 @@ public class App {
     }
 
     public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("spring-root.xml");
+        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring-root.xml");
         App app = context.getBean("app", App.class);
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 7; i++) {
             Event event = context.getBean("event", Event.class);
             event.setMsg("some event for user 1");
             app.logEvent(event);
             sleep(1);
-
         }
+        context.close();
     }
 
     private static void sleep(int i) {

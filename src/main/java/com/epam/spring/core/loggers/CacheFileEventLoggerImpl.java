@@ -14,7 +14,6 @@ public class CacheFileEventLoggerImpl extends FileEventLogger {
         cache.add(msg);
         if (cache.size() == cacheSize) {
             writeEventsFromCache();
-            cache.clear();
         }
     }
 
@@ -22,6 +21,7 @@ public class CacheFileEventLoggerImpl extends FileEventLogger {
         for (Event msg : cache) {
             super.logEvent(msg);
         }
+        cache.clear();
     }
 
     public int getCacheSize() {
@@ -30,6 +30,10 @@ public class CacheFileEventLoggerImpl extends FileEventLogger {
 
     public void setCacheSize(int cacheSize) {
         this.cacheSize = cacheSize;
+    }
+
+    public void destroy() {
+        writeEventsFromCache();
     }
 }
 
