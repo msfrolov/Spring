@@ -26,8 +26,11 @@ public class App {
         ApplicationContext context = new ClassPathXmlApplicationContext("spring-root.xml");
         App app = context.getBean("app", App.class);
         for (int i = 0; i < 6; i++) {
-            app.logEvent("some event for user 1");
+            Event event = context.getBean("event", Event.class);
+            event.setMsg("some event for user 1");
+            app.logEvent(event);
             sleep(1);
+
         }
     }
 
@@ -39,9 +42,11 @@ public class App {
         }
     }
 
-    private void logEvent(String msg) {
-        String message = msg.replaceAll(client.getId(), client.getFullName());
-        eventLogger.logEvent(new Event(message));
+    private void logEvent(Event msg) {
+        String message = msg.getMsg();
+        message.replaceAll(client.getId(), client.getFullName());
+        msg.setMsg(message);
+        eventLogger.logEvent(msg);
     }
 
     public Client getClient() {
@@ -59,4 +64,5 @@ public class App {
     public void setEventLogger(EventLogger eventLogger) {
         this.eventLogger = eventLogger;
     }
+
 }

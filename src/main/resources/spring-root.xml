@@ -21,4 +21,13 @@
         <constructor-arg name="eventLogger" ref="eventLogger"/>
     </bean>
 
+    <bean id="event" class="com.epam.spring.core.beans.Event" scope="prototype">
+        <constructor-arg>
+            <bean class="java.util.Date"/>
+        </constructor-arg>
+        <constructor-arg>
+            <bean class="java.text.DateFormat" factory-method="getDateTimeInstance"/>
+        </constructor-arg>
+    </bean>
+
 </beans>
