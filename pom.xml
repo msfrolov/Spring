@@ -17,6 +17,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--<spring.version>4.3.2.RELEASE</spring.version>-->
         <spring.ver>3.2.13.RELEASE</spring.ver>
+        <commons.ver>2.4</commons.ver>
     </properties>
 
     <build>
@@ -37,6 +38,7 @@
     </build>
 
     <dependencies>
+        <!--Spring-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -56,6 +58,12 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
             <version>${spring.ver}</version>
+        </dependency>
+        <!--Common-->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons.ver}</version>
         </dependency>
     </dependencies>
 
