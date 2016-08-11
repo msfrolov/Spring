@@ -1,5 +1,6 @@
 package com.epam.spring.core.loggers;
 
+import com.epam.spring.core.beans.Event;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -35,7 +36,7 @@ public class FileEventLogger implements EventLogger {
         }
     }
 
-    @Override public void logEvent(String msg) {
+    @Override public void logEvent(Event msg) {
         try {
             FileUtils.writeStringToFile(this.file, new Date() + " - " + msg + "\r" + "\n", true);
         } catch (IOException e) {

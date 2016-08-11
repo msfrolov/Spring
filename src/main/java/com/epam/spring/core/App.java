@@ -1,6 +1,7 @@
 package com.epam.spring.core;
 
 import com.epam.spring.core.beans.Client;
+import com.epam.spring.core.beans.Event;
 import com.epam.spring.core.loggers.EventLogger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -40,7 +41,7 @@ public class App {
 
     private void logEvent(String msg) {
         String message = msg.replaceAll(client.getId(), client.getFullName());
-        eventLogger.logEvent(message);
+        eventLogger.logEvent(new Event(message));
     }
 
     public Client getClient() {

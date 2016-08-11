@@ -1,14 +1,16 @@
 package com.epam.spring.core.loggers;
 
+import com.epam.spring.core.beans.Event;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class CacheFileEventLoggerImpl extends FileEventLogger {
 
     private int cacheSize;
-    private List<String> cache = new ArrayList<>();
+    private List<Event> cache = new ArrayList<>();
 
-    @Override public void logEvent(String msg) {
+    @Override public void logEvent(Event msg) {
         cache.add(msg);
         if (cache.size() == cacheSize) {
             writeEventsFromCache();
@@ -17,7 +19,7 @@ public class CacheFileEventLoggerImpl extends FileEventLogger {
     }
 
     private void writeEventsFromCache() {
-        for (String msg : cache) {
+        for (Event msg : cache) {
             super.logEvent(msg);
         }
     }
