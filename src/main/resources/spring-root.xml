@@ -10,7 +10,11 @@
         <constructor-arg name="fullName" value="John Smith"/>
     </bean>
 
-    <bean id="eventLogger" class="com.epam.spring.core.loggers.FileEventLogger" init-method="init"/>
+    <bean id="eventLogger" class="com.epam.spring.core.loggers.CacheFileEventLoggerImpl" init-method="init">
+        <property name="filename" value="C:\123\123.txt"/>
+        <property name="cacheSize" value="3"/>
+    </bean>
+
 
     <bean id="app" class="com.epam.spring.core.App">
         <constructor-arg name="client" ref="client"/>

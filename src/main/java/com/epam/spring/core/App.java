@@ -24,7 +24,18 @@ public class App {
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("spring-root.xml");
         App app = context.getBean("app", App.class);
-        app.logEvent("some event for user 1");
+        for (int i = 0; i < 6; i++) {
+            app.logEvent("some event for user 1");
+            sleep(1);
+        }
+    }
+
+    private static void sleep(int i) {
+        try {
+            Thread.sleep(i * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void logEvent(String msg) {
