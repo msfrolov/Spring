@@ -4,7 +4,7 @@
        xsi:schemaLocation="
  		http://www.springframework.org/schema/beans
  		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd"
-    default-lazy-init="true">
+       default-lazy-init="true">
 
     <bean id="client" class="com.epam.spring.core.beans.Client">
         <constructor-arg name="id" value="1"/>
@@ -13,8 +13,15 @@
     </bean>
 
     <bean id="app" class="com.epam.spring.core.App">
+
         <constructor-arg name="client" ref="client"/>
         <constructor-arg name="eventLogger" ref="eventLogger"/>
+        <constructor-arg name="loggerMap">
+            <map>
+                <entry key="INFO" value-ref="consoleEventLogger"/>
+                <entry key="ERROR" value-ref="combinedEventLogger"/>
+            </map>
+        </constructor-arg>
     </bean>
 
 </beans>

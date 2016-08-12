@@ -19,7 +19,7 @@
         <property name="cacheSize" value="3"/>
     </bean>
 
-    <bean id="combinedEventLogger">
+    <bean id="combinedEventLogger" class="com.epam.spring.core.loggers.CombinedEventLogger">
         <constructor-arg>
             <list>
                 <ref bean="consoleEventLogger"/>

@@ -7,6 +7,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.Map;
+
+import static com.epam.spring.core.EventType.ERROR;
+import static com.epam.spring.core.EventType.INFO;
+
 public class App {
 
     //    private Client client = context.getBean("client", Client.class);
@@ -14,41 +19,48 @@ public class App {
 
     private Client client;
     private EventLogger eventLogger;
+    private Map<EventType, EventLogger> loggerMap;
 
     public App() {
     }
 
-    public App(Client client, EventLogger eventLogger) {
+    public App(Client client, EventLogger eventLogger, Map<EventType, EventLogger> loggerMap) {
         this.client = client;
         this.eventLogger = eventLogger;
+        this.loggerMap = loggerMap;
     }
 
     public static void main(String[] args) {
         ApplicationContext contextRoot = new ClassPathXmlApplicationContext("spring-root.xml");
-        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"spring-particular.xml"} , contextRoot);
+        ConfigurableApplicationContext context =
+                new ClassPathXmlApplicationContext(new String[] {"spring-particular.xml"}, contextRoot);
         App app = context.getBean("app", App.class);
-        for (int i = 0; i < 7; i++) {
-            Event event = context.getBean("event", Event.class);
-            event.setMsg("some event for user 1");
-            app.logEvent(event);
-            sleep(1);
-        }
+
+        Event event1 = context.getBean("event", Event.class);
+        event1.setMsg("some event for user 1");
+        app.logEvent(ERROR, event1);
+        Event event2 = context.getBean("event", Event.class);
+        event2.setMsg("some event for user 1");
+        app.logEvent(INFO, event2);
+        Event event3 = context.getBean("event", Event.class);
+        event3.setMsg("some event for user 1");
+        app.logEvent(event3);
         context.close();
     }
 
-    private static void sleep(int i) {
-        try {
-            Thread.sleep(i * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    private void logEvent(EventType type, Event msg) {
+        EventLogger logger = loggerMap.get(type);
+        if (logger == null) {
+            logger = this.eventLogger;
         }
-    }
-
-    private void logEvent(Event msg) {
         String message = msg.getMsg();
         message.replaceAll(client.getId(), client.getFullName());
         msg.setMsg(message);
-        eventLogger.logEvent(msg);
+        logger.logEvent(msg);
+    }
+
+    private void logEvent(Event msg) {
+        logEvent(null, msg);
     }
 
     public Client getClient() {
@@ -66,5 +78,4 @@ public class App {
     public void setEventLogger(EventLogger eventLogger) {
         this.eventLogger = eventLogger;
     }
-
 }
