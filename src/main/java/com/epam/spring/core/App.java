@@ -8,6 +8,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
 import static com.epam.spring.core.EventType.ERROR;
 import static com.epam.spring.core.EventType.INFO;
@@ -20,6 +22,7 @@ public class App {
     private Client client;
     private EventLogger eventLogger;
     private Map<EventType, EventLogger> loggerMap;
+    private Properties properties;
 
     public App() {
     }
@@ -31,10 +34,20 @@ public class App {
     }
 
     public static void main(String[] args) {
+
+
         ApplicationContext contextRoot = new ClassPathXmlApplicationContext("spring-root.xml");
         ConfigurableApplicationContext context =
                 new ClassPathXmlApplicationContext(new String[] {"spring-particular.xml"}, contextRoot);
         App app = context.getBean("app", App.class);
+        Properties properties = app.properties;
+        Set<String> propertyNames = properties.stringPropertyNames();
+        for (String s : propertyNames) {
+            String msg = (String) properties.get(s);
+            Event event = context.getBean("event", Event.class);
+            event.setMsg(msg);
+            app.logEvent(INFO, event);
+        }
 
         Event event1 = context.getBean("event", Event.class);
         event1.setMsg("some event for user 1");
@@ -77,5 +90,13 @@ public class App {
 
     public void setEventLogger(EventLogger eventLogger) {
         this.eventLogger = eventLogger;
+    }
+
+    public Properties getProperties() {
+        return properties;
+    }
+
+    public void setProperties(Properties properties) {
+        this.properties = properties;
     }
 }
