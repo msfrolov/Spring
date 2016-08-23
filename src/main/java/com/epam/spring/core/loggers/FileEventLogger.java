@@ -10,8 +10,16 @@ import java.util.Date;
 public class FileEventLogger implements EventLogger {
 
     private String filename;
+    private String directory;
     private File file;
 
+    public String getDirectory() {
+        return directory;
+    }
+
+    public void setDirectory(String directory) {
+        this.directory = directory;
+    }
 
     public String getFilename() {
         return filename;
@@ -20,6 +28,7 @@ public class FileEventLogger implements EventLogger {
     public void setFilename(String filename) {
         this.filename = filename;
     }
+
 
     public File getFile() {
         return file;
@@ -30,9 +39,25 @@ public class FileEventLogger implements EventLogger {
     }
 
     public void init() throws IOException {
-        this.file = new File(filename);
+        checkDirectory();
+        checkFile();
+    }
+
+    private void checkFile() throws IOException {
+        file = new File(directory + filename);
+        if (!file.exists())
+            file.createNewFile();
         if (!file.canWrite()) {
             throw new IOException("can't get access to file");
+        }
+    }
+
+    private void checkDirectory() throws IOException {
+        File directoryFile = new File(directory);
+        if (!directoryFile.exists()) {
+            if (!directoryFile.mkdir()) {
+                throw new IOException("can't create directory");
+            }
         }
     }
 

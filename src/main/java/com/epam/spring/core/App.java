@@ -3,7 +3,6 @@ package com.epam.spring.core;
 import com.epam.spring.core.beans.Client;
 import com.epam.spring.core.beans.Event;
 import com.epam.spring.core.loggers.EventLogger;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -35,10 +34,13 @@ public class App {
 
     public static void main(String[] args) {
 
+        //  -- spring-particular.hml imported into the spring-root.xml --
+        //  ApplicationContext contextRoot = new ClassPathXmlApplicationContext("spring-root.xml");
+        //  ConfigurableApplicationContext context =
+        //  new ClassPathXmlApplicationContext(new String[] {"spring-particular.xml"}, contextRoot);
 
-        ApplicationContext contextRoot = new ClassPathXmlApplicationContext("spring-root.xml");
-        ConfigurableApplicationContext context =
-                new ClassPathXmlApplicationContext(new String[] {"spring-particular.xml"}, contextRoot);
+        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring-root.xml");
+
         App app = context.getBean("app", App.class);
         Properties properties = app.properties;
         Set<String> propertyNames = properties.stringPropertyNames();
@@ -67,8 +69,8 @@ public class App {
             logger = this.eventLogger;
         }
         String message = msg.getMsg();
-        message.replaceAll(client.getId(), client.getFullName());
-        msg.setMsg(message);
+        String s = message.replaceAll(client.getId(), client.getFullName());
+        msg.setMsg(s);
         logger.logEvent(msg);
     }
 

@@ -10,7 +10,8 @@
 
     <bean id="fileEventLogger" class="com.epam.spring.core.loggers.FileEventLogger"
           init-method="init">
-        <property name="filename" value="C:\123\123.txt"/>
+        <property name="filename" value="${file-logger}"/>
+        <property name="directory" value="${directory-logger}"/>
     </bean>
 
     <bean id="cacheFileEventLogger" name="eventLogger" class="com.epam.spring.core.loggers.CacheFileEventLoggerImpl"
